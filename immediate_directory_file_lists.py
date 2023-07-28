@@ -16,8 +16,10 @@ def get_immediate_subdirectories(parent_dir):
 
 def get_directories_files_counts(dirs):
     """Get counts of files in multiple directories using parallel processing."""
-    with multiprocessing.Pool() as pool:
-        dir_counts = pool.map(count_files, dirs)
+    pool = multiprocessing.Pool()
+    dir_counts = pool.map(count_files, dirs)
+    pool.close()
+    pool.join()
     return dir_counts
 
 if __name__ == "__main__":
@@ -28,4 +30,4 @@ if __name__ == "__main__":
     dir_file_counts = get_directories_files_counts(directories)
 
     for dir, count in dir_file_counts:
-        print(f"{dir}: {count} files")
+        print ("{}: {} files".format(dir, count))
